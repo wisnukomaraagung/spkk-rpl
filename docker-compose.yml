@@ -1,36 +1,17 @@
+version: '3'
 services:
-  web:
-    build: .
-    ports:
-      - "8080:80"
-    volumes:
-      - .:/var/www/html
-    depends_on:
-      - db
-    restart: unless-stopped
-
   db:
-    image: mysql:8.0
+    image: postgres:15-alpine
+    container_name: pos_koperasi_db
+    restart: always
     environment:
-      MYSQL_DATABASE: dbpos_koperasi
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_DB: pos_koperasi
+      POSTGRES_USER: pos_user
+      POSTGRES_PASSWORD: pos_password
+    ports:
+      - "5432:5432"
     volumes:
-      - "./dbpos_koperasi (1).sql:/docker-entrypoint-initdb.d/init.sql"
-      - db_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    restart: unless-stopped
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "8081:80"
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-    depends_on:
-      - db
-    restart: unless-stopped
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
-  db_data:
+  pgdata:

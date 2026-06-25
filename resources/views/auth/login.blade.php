@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login POS Koperasi</title>
+
+    <!-- ✅ PANGGIL CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+    <!-- ✅ STYLING KHUSUS LOGIN DUA KOLOM -->
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0 !important;
+            background-color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .login-split-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            width: 95%;
+            max-width: 900px;
+            display: flex;
+            overflow: hidden;
+            min-height: 500px;
+            margin: 2rem 0;
+        }
+
+        .illustration-side {
+            flex: 1;
+            background: #0f172a;
+            /* Warna dark navy sesuai sidebar dashboard */
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #1e293b;
+        }
+
+        .illustration-side h3 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .illustration-side p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin: 0 0 2rem 0;
+            line-height: 1.5;
+        }
+
+        .svg-graphic {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+        }
+
+        .form-side {
+            flex: 1;
+            padding: 3.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #ffffff;
+            position: relative;
+        }
+
+        .login-header {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .login-title {
+            color: #1e293b;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: -0.5px;
+        }
+
+        .login-subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        form.modern-form {
+            background: transparent;
+            padding: 0;
+            box-shadow: none;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            color: #334155;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            color: #1e293b;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #0f172a;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.15);
+        }
+
+        .btn-login-modern {
+            display: block;
+            width: 100%;
+            background: #0f172a;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.85rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2), 0 2px 4px -1px rgba(15, 23, 42, 0.1);
+            border: none;
+            cursor: pointer;
+            margin-top: 1.5rem;
+        }
+
+        .btn-login-modern:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px -1px rgba(15, 23, 42, 0.3), 0 3px 6px -1px rgba(15, 23, 42, 0.15);
+        }
+
+        .back-link {
+            display: inline-block;
+            text-align: left;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #0f172a;
+        }
+
+        .error-alert {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content;
+            max-width: 90%;
+            background-color: #ffffff;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            border-bottom: 3px solid #ef4444;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            z-index: 9999;
+            opacity: 0;
+            animation: slideDown 0.4s ease-out forwards;
+        }
+
+        .error-alert.hide {
+            animation: slideUp 0.4s ease-in forwards;
+        }
+
+        .error-alert b {
+            color: #ef4444;
+            font-weight: 600;
+            margin-right: 0.25rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                top: -2rem;
+                opacity: 0;
+                transform: translateX(-50%);
+            }
+
+            to {
+                top: 1.5rem;
+                opacity: 1;
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                top: 1.5rem;
+                opacity: 1;
+                transform: translateX(-50%);
+            }
+
+            to {
+                top: -2rem;
+                opacity: 0;
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Mobile responsif */
+        @media (max-width: 768px) {
+            .login-split-card {
+                flex-direction: column;
+                max-width: 400px;
+                min-height: auto;
+            }
+
+            .illustration-side {
+                display: none;
+            }
+
+            .form-side {
+                padding: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-split-card">
+
+        <!-- KOLOM KIRI (Ilustrasi Minimalis) -->
+        <div class="illustration-side">
+            <h3>POS Koperasi</h3>
+            <p>Sistem manajemen penjualan dan kasir cerdas untuk pertumbuhan ekonomi yang lebih baik.</p>
+            <svg class="svg-graphic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+                <!-- Grid X / Y -->
+                <path d="M50 250 L350 250" stroke="#334155" stroke-width="2" stroke-linecap="round" />
+                <path d="M50 50 L50 250" stroke="#334155" stroke-width="2" stroke-linecap="round" />
+
+                <!-- Bars (Penjualan) -->
+                <rect x="80" y="180" width="40" height="70" rx="6" fill="#7dd3fc" opacity="0.6" />
+                <rect x="140" y="120" width="40" height="130" rx="6" fill="#38bdf8" opacity="0.8" />
+                <rect x="200" y="160" width="40" height="90" rx="6" fill="#0ea5e9" />
+                <rect x="260" y="80" width="40" height="170" rx="6" fill="#0284c7" />
+
+                <!-- Growth Line (Trend) -->
+                <path d="M100 180 L160 120 L220 160 L280 80" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <circle cx="100" cy="180" r="5" fill="#0f172a" stroke="#fbbf24" stroke-width="3" />
+                <circle cx="160" cy="120" r="5" fill="#0f172a" stroke="#fbbf24" stroke-width="3" />
+                <circle cx="220" cy="160" r="5" fill="#0f172a" stroke="#fbbf24" stroke-width="3" />
+                <circle cx="280" cy="80" r="5" fill="#0f172a" stroke="#fbbf24" stroke-width="3" />
+
+                <!-- Floating abstract shapes -->
+                <circle cx="330" cy="60" r="12" fill="#34d399" opacity="0.8" />
+                <rect x="60" y="60" width="16" height="16" rx="4" fill="#a78bfa" opacity="0.6"
+                    transform="rotate(25 60 60)" />
+            </svg>
+        </div>
+
+        <!-- KOLOM KANAN (Form) -->
+        <div class="form-side">
+            <div class="login-header">
+                <h2 class="login-title">Masuk</h2>
+                <p class="login-subtitle">Silakan login untuk melanjutkan</p>
+            </div>
+
+            <!-- Jendela Notifikasi Error -->
+            <div id="errorAlert" class="error-alert">
+                <b>Gagal!</b> Username atau sandi keliru (perhatikan huruf kapital).
+            </div>
+
+            <form class="modern-form" action="{{ route('login') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input class="form-input" type="text" id="username" name="username" placeholder="Masukkan username"
+                        required value="{{ old('username') }}">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-input" type="password" id="password" name="password"
+                        placeholder="Masukkan password" required>
+                </div>
+
+                <button type="submit" class="btn-login-modern">Login</button>
+            </form>
+
+            <a href="{{ route('home') }}" class="back-link">&larr; Kembali ke Beranda</a>
+        </div>
+
+    </div>
+
+    <script>
+        // Cek apakah ada flash message error dari Laravel
+        @if (session('error'))
+            const alertBox = document.getElementById('errorAlert');
+            alertBox.style.display = 'block';
+
+            // Animasi menghilang setelah 3 detik
+            setTimeout(() => {
+                alertBox.classList.add('hide');
+                // Sembunyikan elemen setelah animasi selesai
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 400);
+            }, 3000);
+        @endif
+    </script>
+</body>
+
+</html>
