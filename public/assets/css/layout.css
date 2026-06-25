@@ -237,3 +237,165 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 1.5rem;
 }
+
+/* =============================================
+   RESPONSIVE - MOBILE & TABLET
+   ============================================= */
+
+/* Hamburger button - hidden on desktop */
+.btn-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1e293b;
+    padding: 0.25rem;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.btn-hamburger:hover {
+    background: #f1f5f9;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.topbar-left .topbar-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Sidebar overlay */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+/* ---- Tablet (768px - 1024px) ---- */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .panels-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- Mobile (max 768px) ---- */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    /* Sidebar jadi drawer dari kiri */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 260px;
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    /* Main wrapper ambil full width */
+    .main-wrapper {
+        width: 100%;
+        height: 100vh;
+    }
+
+    /* Topbar mobile */
+    .topbar {
+        padding: 0 1rem;
+        height: 60px;
+    }
+
+    .btn-hamburger {
+        display: flex;
+    }
+
+    .topbar-title {
+        font-size: 1rem;
+    }
+
+    .topbar-user {
+        gap: 0.5rem;
+    }
+
+    .user-role-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    /* Sembunyikan nama user di HP kecil, tampilkan hanya icon */
+    .user-name-text {
+        display: none;
+    }
+
+    .current-date {
+        display: none;
+    }
+
+    /* Content body */
+    .content-body {
+        padding: 1rem;
+        height: calc(100vh - 60px);
+    }
+
+    /* Stat cards stack */
+    .stat-cards-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+    }
+
+    .stat-card-info h2 {
+        font-size: 1.3rem;
+    }
+
+    /* Panels stack */
+    .panels-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Table scroll horizontal */
+    .panel {
+        padding: 1rem;
+        overflow-x: auto;
+    }
+}
+
+/* ---- Layar sangat kecil (max 480px) ---- */
+@media (max-width: 480px) {
+    .stat-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar-title {
+        font-size: 0.9rem;
+    }
+}
