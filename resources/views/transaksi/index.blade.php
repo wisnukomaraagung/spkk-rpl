@@ -16,7 +16,7 @@
               <img src="{{ asset('assets/img/search.png') }}" alt="Search" style="width: 18px; filter: grayscale(1) opacity(0.6);">
           </div>
           <input type="text" id="searchInput" placeholder="Cari produk...">
-          <select id="catSelect"><option>— Semua Kategori —</option></select>
+
           <span class="product-count" id="prodCount">0 produk ditampilkan</span>
       </div>
       <div class="pos-products-grid" id="productGrid">
